@@ -1,0 +1,16 @@
+{
+  "name": "CIQ-Pi",
+  "version": "1.0.0",
+  "main": "ciq-node.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jim_m_58",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bleno": "^0.3.5",
+    "python-shell": "^1.0.7",
+    "rpio": "^1.0.13"
+  }
+}

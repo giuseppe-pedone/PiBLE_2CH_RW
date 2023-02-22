@@ -1,0 +1,71 @@
+## Content files and directories
+
+README - this file
+runciq - a scipt fine that can be used to start the application
+
+## Application Description
+This version of RaspberryPI 3 Model B+ GATT Service application (PiApp), acts as Bluetooth Low Energy (BLE) peripheral into a BLE comunication (the master is a wearable device).
+In particular it manages two characteristics:
+
+- MEM: a [READ] managed characteristic representing the amount of free memory available on Raspberry Pi device. It's written by Raspberry PI.
+  The Raspberry PI application performs periodically reading of free memory (using os.freemem() node module function) in order to know the available amount of bytes on the device.
+- HRV: a [READ, WRITE, NOTIFY] managed characteristic representing the Heart Rate Variability (HRV) of the client that is wearing the Wearable Device. It's read by Raspberry PI.
+
+Once the PiApp is started, the Raspberry Pi starts avdertising the Wearable service (which ID is contained into 'mainuuid.js' file) for 120 seconds.
+During this time interval, the Raspberry Pi is waiting for BLE pairing and connection, while the wearable device has to connect to the Raspberry Pi.
+After the connection is complete, PiApp starts to printing informations about each READ/WRITE/NOTIFY event incoming from the Wearable device.
+During the BLE session the Wearable devices writes the HRV characterstic and reads the MEM characterstic on/from Raspberry Pi. 
+When the Wearable ends the session, the Raspberry Pi maintains active the state of the service without ending (it is  ready for a new session).  
+
+The main entry of the whole application is the 'ciq-base.js' file. The application does not detain any kinds of commands or starting parameters.
+In order to communicate via BLE the application uses 'bleno' node module by setting callbacks on some bleno events.
+  
+## Installation and Requirements
+
+To install the RaspberryPI App you need to satisfy the following requirements:
+
+- Using a Linux based system. 
+- node and npm
+  To install node and npm, run the following script:
+        ' cd ~
+          wget https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-armv6l.tar.xz
+          tar xvf node-v8.11.1-linux-armv6l.tar.xz
+          cd node-v8.11.1-linux-armv6l/
+          sudo cp -R * /usr/local/'
+  To check node and npm installation, run the follwiung commands
+        ' node -v' - (You’ll probably still see 8.11.1, but it could be higher)
+        ' npm -v ' - (You’ll probably see 5.60, but it could be higher)'
+- PythonShell
+  To install PythonShell, run the following command:
+        ' npm install python-shell '
+- RPIO
+  To install RPIO, run the following command:
+        ' npm install rpio '
+- Bluez
+  To install Bluez, run the following command:
+        ' snap install bluez ' or ' sudo apt install bluez '
+
+## Run the PiApp
+
+In order to start the RaspberryPI BLE Service, activate Bluetooth on the Raspberry Device run the following command:
+
+        ' sudo <PATH TO RUNCIQ>/runciq '
+
+To end the PiApp type 'CTRL+c' on commandline.
+ 
+## Directory Tree
+In the top level directory, the .js files are what's used to actually 
+start things.  There are three different sets, one for each option as 
+far as characteristice and all named ciq-XXX.js (the node file) and
+ciqXXXservice.js (the main service, which defines the characteristics 
+used for each)
+
+There are also the package.* files that are used by node.  I 
+don't think you really want to mess with them.
+
+node_modules are just that - modules needed.
+
+All the js files used for the various characteristics are under 
+"characteristics", and specifically in subdirectores based on which
+group of characteristics they belong to.
+ 

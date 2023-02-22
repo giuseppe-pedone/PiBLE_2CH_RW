@@ -1,0 +1,21 @@
+# This is a script to run (aned explain) the various options
+# when using the CIQ Sw for the raspberry pi.  It assumes
+# that it's run in the top level directory of the extracted tar file.
+
+echo -n "started: "
+date
+
+#-------------------------------------------------
+# Base Characteristics
+#-------------------------------------------------
+# use this to run with a basic set of characteristics -
+# available memory, uptime, load average and a simple 
+# read/write one.
+#
+#
+# it's the one to start with to check basic functionality
+# run:
+
+sudo node ciq-base.js
+
+
